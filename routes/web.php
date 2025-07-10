@@ -19,9 +19,23 @@ Route::get('/', fn () => view('dashboard'));
 Route::controller(DataMaster::class)->group(function () {
     Route::get('/prodi', 'prodi')->name('prodi.index');
     Route::get('/prodi/ajax', 'ajaxProdi')->name('prodi.ajax');
-    Route::post('/prodi/store','storeProdi')->name('prodi.store');
+    Route::post('/prodi/store', 'storeProdi')->name('prodi.store');
     Route::get('/tahun', 'tahun')->name('tahun.index');
     Route::get('/tahun/ajax', 'ajaxTahun')->name('tahun.ajax');
-    Route::post('/prodi/store', [ProdiController::class, 'store'])->name('prodi.store');
+    // Fakultas CRUD
+    Route::get('/fakultas', 'fakultas')->name('fakultas.index');
+    Route::get('/fakultas/ajax', 'ajaxFakultas')->name('fakultas.ajax');
+    Route::post('/fakultas/store', 'storeFakultas')->name('fakultas.store');
+    Route::get('/fakultas/edit/{id}', 'editFakultas')->name('fakultas.edit');
+    Route::post('/fakultas/update/{id}', 'updateFakultas')->name('fakultas.update');
+    Route::delete('/fakultas/delete/{id}', 'deleteFakultas')->name('fakultas.delete');
 
+    Route::get('/user', 'user')->name('user.index');
+    Route::get('/pimpinan', 'pimpinan')->name('pimpinan.index');
+    Route::get('/kategori_barang', 'kategoriBarang')->name('kategori_barang.index');
+    Route::get('/barang', 'barang')->name('barang.index');
+    Route::get('/suplier', 'suplier')->name('suplier.index');
+    Route::get('/lokasi', 'lokasi')->name('lokasi.index');
+    Route::get('/penerimaan', 'penerimaan')->name('penerimaan.index');
+    Route::get('/lainnya', 'lainnya')->name('lainnya.index');
 });

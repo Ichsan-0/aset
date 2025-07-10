@@ -58,7 +58,7 @@
                   </g>
                 </svg>
               </span>
-              <span class="app-brand-text demo menu-text fw-bolder ms-2">Sidang-app</span>
+              <span class="app-brand-text demo menu-text fw-bolder ms-2">BMN-app</span>
             </a>
 
             <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -80,7 +80,7 @@
             <!-- Layouts -->
             @php
             // daftar route untuk menu Data Master
-            $dataMasterRoutes = ['tahun', 'prodi', 'jurusan', 'mata-kuliah', 'dosen', 'mahasiswa'];
+            $dataMasterRoutes = ['tahun', 'prodi', 'fakultas', 'mata-kuliah', 'dosen', 'mahasiswa'];
             @endphp
 
             <li class="menu-item {{ in_array(request()->segment(1), $dataMasterRoutes) ? 'open active' : '' }}">
@@ -100,26 +100,52 @@
                     <div data-i18n="Without menu">Data Prodi</div>
                   </a>
                 </li>
-                <li class="menu-item">
-                  <a href="layouts-without-navbar.html" class="menu-link">
-                    <div data-i18n="Without navbar">Jenis Penelitian</div>
+                <li class="menu-item {{ request()->is('fakultas') ? 'active' : '' }}">
+                  <a href="{{ route('fakultas.index') }}" class="menu-link">
+                    <div data-i18n="Without menu">Data Fakultas</div>
                   </a>
                 </li>
-                <li class="menu-item">
-                  <a href="layouts-container.html" class="menu-link">
-                    <div data-i18n="Container">Container</div>
+                <li class="menu-item {{ request()->is('user') ? 'active' : '' }}">
+                  <a href="{{ route('user.index') }}" class="menu-link">
+                  <div data-i18n="Without menu">User</div>
                   </a>
                 </li>
-                <li class="menu-item">
-                  <a href="layouts-fluid.html" class="menu-link">
-                    <div data-i18n="Fluid">Fluid</div>
+                <li class="menu-item {{ request()->is('pimpinan') ? 'active' : '' }}">
+                  <a href="{{ route('pimpinan.index') }}" class="menu-link">
+                  <div data-i18n="Without menu">Pimpinan</div>
                   </a>
                 </li>
-                <li class="menu-item">
-                  <a href="layouts-blank.html" class="menu-link">
-                    <div data-i18n="Blank">Blank</div>
+                <li class="menu-item {{ request()->is('kategori_barang') ? 'active' : '' }}">
+                  <a href="{{ route('kategori_barang.index') }}" class="menu-link">
+                  <div data-i18n="Without menu">Kategori Barang</div>
                   </a>
                 </li>
+                <li class="menu-item {{ request()->is('barang') ? 'active' : '' }}">
+                  <a href="{{ route('barang.index') }}" class="menu-link">
+                  <div data-i18n="Without menu">Barang</div>
+                  </a>
+                </li>
+                <li class="menu-item {{ request()->is('suplier') ? 'active' : '' }}">
+                  <a href="{{ route('suplier.index') }}" class="menu-link">
+                  <div data-i18n="Without menu">Suplier</div>
+                  </a>
+                </li>
+                <li class="menu-item {{ request()->is('lokasi') ? 'active' : '' }}">
+                  <a href="{{ route('lokasi.index') }}" class="menu-link">
+                  <div data-i18n="Without menu">Lokasi</div>
+                  </a>
+                </li>
+                <li class="menu-item {{ request()->is('penerimaan') ? 'active' : '' }}">
+                  <a href="{{ route('penerimaan.index') }}" class="menu-link">
+                  <div data-i18n="Without menu">Penerimaan</div>
+                  </a>
+                </li>
+                <li class="menu-item {{ request()->is('lainnya') ? 'active' : '' }}">
+                  <a href="{{ route('lainnya.index') }}" class="menu-link">
+                  <div data-i18n="Without menu">Lainnya</div>
+                  </a>
+                </li>
+                
               </ul>
             </li>
 
