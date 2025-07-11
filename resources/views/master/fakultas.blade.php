@@ -36,7 +36,7 @@
       @csrf
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Tambah Fakultas</h5>
+          <h5 class="modal-title"></h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">

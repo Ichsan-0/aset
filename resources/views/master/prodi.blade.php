@@ -20,8 +20,9 @@
             <tr>
               <th>No.</th>
               <th>Nama Prodi</th>
-              <th>Tahun Ajaran</th>
-              <th>Ka. Prodi</th>
+              <th>Kode Prodi</th>
+              <th>Fakultas</th>
+              <th>Keterangan</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -36,21 +37,26 @@
       @csrf
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Tambah Prodi</h5>
+          <h5 class="modal-title"></h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <div class="mb-3">
             <label for="nama_prodi" class="form-label">Nama Prodi</label>
-            <input type="text" class="form-control" name="nama_prodi" required>
+            <input type="text" class="form-control" name="nama_prodi" id="nama_prodi" required>
           </div>
           <div class="mb-3">
-            <label for="tahun_ajaran" class="form-label">Tahun Ajaran</label>
-            <input type="text" class="form-control" name="tahun_ajaran" required>
+            <label class="form-label">Kode Prodi</label>
+            <input type="text" class="form-control" name="kode_prodi" id="kode_prodi" required>
           </div>
-          <div class="mb-3">
-            <label for="ka_prodi" class="form-label">Ka. Prodi</label>
-            <input type="number" class="form-control" name="ka_prodi" required>
+          <div class="mb-4">
+            <label for="exampleFormControlSelect1" class="form-label">Pilih Fakultas</label>
+            <select class="form-select" name="id_fakultas" id="id_fakultas" required>
+                <option value="">-- Pilih Fakultas --</option>
+                @foreach($fakultas as $f)
+                  <option value="{{ $f->id }}">{{ $f->kode }} ({{ $f->nama }})</option>
+                @endforeach
+            </select>
           </div>
           <div class="mb-3">
             <label class="form-label">Keterangan</label>
@@ -77,7 +83,7 @@
 
 <script>
 $(function () {
-    $('#prodiTable').DataTable({
+    var table = $('#prodiTable').DataTable({
         processing: true,
         serverSide: true,
         ajax: '{{ route("prodi.ajax") }}',
@@ -85,27 +91,71 @@ $(function () {
         columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
             { data: 'nama_prodi', name: 'nama_prodi' },
-            { data: 'tahun_ajaran', name: 'tahun_ajaran' },
-            { data: 'ka_prodi', name: 'ka_prodi' },
+            { data: 'kode_prodi', name: 'kode_prodi' },
+            { data: 'nama_fakultas', name: 'nama_fakultas', orderable: false, searchable: false },
+            { data: 'ket', name: 'ket' },
             { data: 'action', name: 'action', orderable: false, searchable: false }
         ]
     });
-       // show modal
+
+    // show modal for add
     $('#addBtn').on('click', function () {
         $('#prodiForm')[0].reset();
+        $('#prodi_id').val('');
+        $('.modal-title').text('Tambah Prodi');
         $('#prodiModal').modal('show');
     });
 
-    // submit form
+    // show modal for edit
+    $(document).on('click', '.editBtn', function () {
+        var id = $(this).data('id');
+        $.get('/prodi/edit/' + id, function (data) {
+            $('#prodi_id').val(data.id);
+            $('#nama_prodi').val(data.nama_prodi);
+            $('#kode_prodi').val(data.kode_prodi);
+            $('#id_fakultas').val(data.id_fakultas);
+            $('#ket').val(data.ket);
+            $('.modal-title').text('Edit Prodi');
+            $('#prodiModal').modal('show');
+        });
+    });
+
+    // submit form (add/update)
     $('#prodiForm').on('submit', function (e) {
         e.preventDefault();
+        var id = $('#prodi_id').val();
+        var url = id ? '/prodi/update/' + id : '/prodi/store';
+        var method = 'POST';
         $.ajax({
-            url: '{{ route("prodi.store") }}',
-            method: 'POST',
+            url: url,
+            method: method,
             data: $(this).serialize(),
             success: function (res) {
                 if (res.success) {
                     $('#prodiModal').modal('hide');
+                    table.ajax.reload();
+                    alert(res.message);
+                }
+            },
+            error: function (xhr) {
+                alert('Terjadi kesalahan!');
+                console.log(xhr.responseText);
+            }
+        });
+    });
+
+    // delete
+    $(document).on('click', '.deleteBtn', function () {
+        if (!confirm('Yakin ingin menghapus data ini?')) return;
+        var id = $(this).data('id');
+        $.ajax({
+            url: '/prodi/delete/' + id,
+            method: 'DELETE',
+            data: {
+                _token: '{{ csrf_token() }}'
+            },
+            success: function (res) {
+                if (res.success) {
                     table.ajax.reload();
                     alert(res.message);
                 }
