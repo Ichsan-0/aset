@@ -34,10 +34,17 @@ Route::controller(DataMaster::class)->group(function () {
     Route::get('/fakultas/edit/{id}', 'editFakultas')->name('fakultas.edit');
     Route::post('/fakultas/update/{id}', 'updateFakultas')->name('fakultas.update');
     Route::delete('/fakultas/delete/{id}', 'deleteFakultas')->name('fakultas.delete');
-
+    // Kategori Barang
+    Route::get('/kategori_barang', 'kategoriBarang')->name('kategori_barang.index');
+    Route::get('/kategori_barang/ajax', 'ajaxKategoriBarang')->name('kategori_barang.ajax');
+    Route::post('/kategori_barang/store', 'storeKategoriBarang')->name('kategori_barang.store');
+    Route::get('/kategori_barang/edit/{id}', 'editKategoriBarang')->name('kategori_barang.edit');
+    Route::post('/kategori_barang/update/{id}', 'updateKategoriBarang')->name('kategori_barang.update');
+    Route::delete('/kategori_barang/delete/{id}', 'deleteKategoriBarang')->name('kategori_barang.delete');
+    
     Route::get('/user', 'user')->name('user.index');
     Route::get('/pimpinan', 'pimpinan')->name('pimpinan.index');
-    Route::get('/kategori_barang', 'kategoriBarang')->name('kategori_barang.index');
+    
     Route::get('/barang', 'barang')->name('barang.index');
     Route::get('/suplier', 'suplier')->name('suplier.index');
     Route::get('/lokasi', 'lokasi')->name('lokasi.index');

@@ -90,24 +90,33 @@
               </a>
 
               <ul class="menu-sub">
-                <li class="menu-item {{ request()->is('tahun') ? 'active' : '' }}">
-                  <a href="{{ route('tahun.index') }}" class="menu-link">
-                    <div data-i18n="Without menu">Tahun Ajaran</div>
+                
+                <li class="menu-item {{ in_array(request()->segment(1), $dataMasterRoutes) ? 'open active' : '' }}">
+                  <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <div data-i18n="Customer Details">Master Akademik</div>
                   </a>
-                </li>
-                <li class="menu-item {{ request()->is('prodi') ? 'active' : '' }}">
-                  <a href="{{ route('prodi.index') }}" class="menu-link">
-                    <div data-i18n="Without menu">Data Prodi</div>
-                  </a>
-                </li>
-                <li class="menu-item {{ request()->is('fakultas') ? 'active' : '' }}">
-                  <a href="{{ route('fakultas.index') }}" class="menu-link">
-                    <div data-i18n="Without menu">Data Fakultas</div>
-                  </a>
+                  <ul class="menu-sub">
+                    <li class="menu-item {{ request()->is('tahun') ? 'active' : '' }}">
+                      <a href="{{ route('tahun.index') }}" class="menu-link">
+                        <div data-i18n="Without menu">Tahun Ajaran</div>
+                      </a>
+                    </li>
+                    
+                    <li class="menu-item {{ request()->is('fakultas') ? 'active' : '' }}">
+                      <a href="{{ route('fakultas.index') }}" class="menu-link">
+                        <div data-i18n="Without menu">Data Fakultas</div>
+                      </a>
+                    </li>
+                    <li class="menu-item {{ request()->is('prodi') ? 'active' : '' }}">
+                      <a href="{{ route('prodi.index') }}" class="menu-link">
+                        <div data-i18n="Without menu">Data Prodi</div>
+                      </a>
+                    </li>
+                  </ul>
                 </li>
                 <li class="menu-item {{ request()->is('user') ? 'active' : '' }}">
                   <a href="{{ route('user.index') }}" class="menu-link">
-                  <div data-i18n="Without menu">User</div>
+                  <div data-i18n="Without menu">Pengguna</div>
                   </a>
                 </li>
                 <li class="menu-item {{ request()->is('pimpinan') ? 'active' : '' }}">

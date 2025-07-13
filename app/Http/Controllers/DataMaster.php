@@ -208,4 +208,38 @@ public function ajaxTahun(Request $request)
         return response()->json(['success' => true, 'message' => 'Fakultas berhasil dihapus']);
     }
 
+    public function kategoriBarang()
+    {
+        return view('master.kategori_barang');
+    }
+
+    public function ajaxKategoriBarang(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = KategoriBarang::query();
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    return '
+                    <div class="dropdown">
+                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                            <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <button class="dropdown-item editBtn" data-id="'.$row->id.'">
+                                <i class="bx bx-edit-alt me-1"></i> Edit
+                            </button> 
+                            <button class="dropdown-item deleteBtn" data-id="'.$row->id.'">
+                                <i class="bx bx-trash me-1"></i> Delete
+                            </button>
+                        </div>
+                    </div>';
+                })
+                ->rawColumns(['action'])
+                ->toJson();
+        }
+    }
+    
+
 }
