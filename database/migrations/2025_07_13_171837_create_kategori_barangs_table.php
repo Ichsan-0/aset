@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('kode_kategori');
             $table->string('nama_kategori');
-            $table->enum('tipe_barang', ['A', 'B', 'C']); // Ganti opsi enum sesuai kebutuhan
+            $table->enum('tipe_barang', ['1', '2', '3', '4', '5']); // Ganti opsi enum sesuai kebutuhan
             $table->text('ket')->nullable();
-            $table->enum('status', ['aktif', 'nonaktif']);
+            $table->enum('status', ['y','n'])->default('y'); // 'y' untuk aktif, 'n' untuk tidak aktif
             $table->integer('urutan');
             $table->timestamps();
         });

@@ -52,23 +52,23 @@
             <input type="text" class="form-control" name="kode_kategori" id="kode_kategori" required>
           </div>
                
-          <div class="mb-3">
+            <div class="mb-3">
             <label class="form-label">Tipe Barang</label>
             <select class="form-select" name="tipe_barang" id="tipe_barang" required>
               <option value="">-- Pilih Tipe Barang --</option>
-              <option value="A">Barang</option>
-              <option value="B">Jasa</option>
+              <option value="1">Aset Tetap</option>
+              <option value="2">Persediaan / Habis Pakai</option>
+              <option value="3">Aset Tak Berwujud</option>
+              <option value="4">Barang Modal</option>
+              <option value="5">Barang Lainnya</option>
             </select>
-          </div>
+            </div>
           <div class="mb-3">
             <label  class="form-label">Status</label>
             <select class="form-select" name="status" id="status" required>
               <option value="">-- Pilih Status--</option>
-              <option value="1">Aktif </option>
-              <option value="2">Non Aktif</option>
-              <option value="3">Draft</option>
-              <option value="4">Arsip</option>
-              <option value="5">Dihapus</option>
+               <option value="y">Aktif</option>
+               <option value="n">Tidak Aktif</option>
             </select>
           </div>
           <div class="mb-3">
@@ -109,8 +109,26 @@ $(function () {
             { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
             { data: 'kode_kategori', name: 'kode_kategori' },
             { data: 'nama_kategori', name: 'nama_kategori' },
-            { data: 'tipe_barang', name: 'tipe_barang' },
-            { data: 'status', name: 'status' },
+            { 
+                data: 'tipe_barang', 
+                name: 'tipe_barang',
+                render: function(data, type, row) {
+                switch(data) {
+                  case '1': return 'Aset Tetap';
+                  case '2': return 'Persediaan / Habis Pakai';
+                  case '3': return 'Aset Tak Berwujud';
+                  case '4': return 'Barang Modal';
+                  case '5': return 'Barang Lainnya';
+                  default: return data;
+                }
+                }
+              }
+            },
+            { data: 'status', name: 'status',
+              render: function(data, type, row) {
+                return data === 'y' ? 'Aktif' : 'Tidak Aktif';
+              }
+            },
             { data: 'urutan', name: 'urutan' },
             { data: 'action', name: 'action', orderable: false, searchable: false }
         ]
