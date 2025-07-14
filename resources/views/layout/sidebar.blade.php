@@ -78,11 +78,15 @@
             </li>
 
             <!-- Layouts -->
-            @php
-            // daftar route untuk menu Data Master
-            $dataMasterRoutes = ['tahun', 'prodi', 'fakultas', 'mata-kuliah', 'dosen', 'mahasiswa'];
+           @php
+            // semua route di bawah Data Master
+            $dataMasterRoutes = ['tahun', 'prodi', 'fakultas', 'kategori_barang'];
+
+            // hanya untuk Master Akademik
+            $masterAkademikRoutes = ['tahun', 'prodi', 'fakultas'];
             @endphp
 
+            {{-- Data Master --}}
             <li class="menu-item {{ in_array(request()->segment(1), $dataMasterRoutes) ? 'open active' : '' }}">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
@@ -90,8 +94,9 @@
               </a>
 
               <ul class="menu-sub">
-                
-                <li class="menu-item {{ in_array(request()->segment(1), $dataMasterRoutes) ? 'open active' : '' }}">
+
+                {{-- Master Akademik: hanya aktif jika request ada di $masterAkademikRoutes --}}
+                <li class="menu-item {{ in_array(request()->segment(1), $masterAkademikRoutes) ? 'open active' : '' }}">
                   <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <div data-i18n="Customer Details">Master Akademik</div>
                   </a>
@@ -101,12 +106,13 @@
                         <div data-i18n="Without menu">Tahun Ajaran</div>
                       </a>
                     </li>
-                    
+
                     <li class="menu-item {{ request()->is('fakultas') ? 'active' : '' }}">
                       <a href="{{ route('fakultas.index') }}" class="menu-link">
                         <div data-i18n="Without menu">Data Fakultas</div>
                       </a>
                     </li>
+
                     <li class="menu-item {{ request()->is('prodi') ? 'active' : '' }}">
                       <a href="{{ route('prodi.index') }}" class="menu-link">
                         <div data-i18n="Without menu">Data Prodi</div>
@@ -114,19 +120,11 @@
                     </li>
                   </ul>
                 </li>
-                <li class="menu-item {{ request()->is('user') ? 'active' : '' }}">
-                  <a href="{{ route('user.index') }}" class="menu-link">
-                  <div data-i18n="Without menu">Pengguna</div>
-                  </a>
-                </li>
-                <li class="menu-item {{ request()->is('pimpinan') ? 'active' : '' }}">
-                  <a href="{{ route('pimpinan.index') }}" class="menu-link">
-                  <div data-i18n="Without menu">Pimpinan</div>
-                  </a>
-                </li>
+
+                {{-- Kategori Barang: di luar Master Akademik --}}
                 <li class="menu-item {{ request()->is('kategori_barang') ? 'active' : '' }}">
                   <a href="{{ route('kategori_barang.index') }}" class="menu-link">
-                  <div data-i18n="Without menu">Kategori Barang</div>
+                    <div data-i18n="Without menu">Kategori Barang</div>
                   </a>
                 </li>
                 <li class="menu-item {{ request()->is('barang') ? 'active' : '' }}">
