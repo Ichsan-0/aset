@@ -8,6 +8,7 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Models\TahunAjaran; 
 use App\Models\Fakultas;
 use App\Models\Kategori_barang;
+use App\Models\Lokasi;
 
 class DataMaster extends Controller
 {
@@ -289,5 +290,73 @@ public function ajaxTahun(Request $request)
         return response()->json(['success' => true, 'message' => 'Kategori berhasil dihapus']);
     }
 
+    public function lokasi()
+    {
+        return view('master.lokasi');
+    }
 
+    public function ajaxLokasi(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Lokasi::query();
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    return '
+                    <div class="dropdown">
+                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                            <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <button class="dropdown-item editBtn" data-id="'.$row->id.'">
+                                <i class="bx bx-edit-alt me-1"></i> Edit
+                            </button>
+                            <button class="dropdown-item deleteBtn" data-id="'.$row->id.'">
+                                <i class="bx bx-trash me-1"></i> Delete
+                            </button>
+                        </div>
+                    </div>';
+                })
+                ->rawColumns(['action'])
+                ->toJson(); 
+        }
+    }
+    public function storeLokasi(Request $request)
+    {
+        $request->validate([
+            'nama_lokasi' => 'required|string|max:255',
+            'kode_lokasi' => 'required|string|max:50',
+            'keterangan'  => 'nullable|string',
+        ]);
+
+        $lokasi = Lokasi::create($request->all());
+
+        return response()->json(['success' => true, 'message' => 'Lokasi berhasil ditambahkan', 'data' => $lokasi]);
+    }
+
+    public function editLokasi($id)
+    {
+        $lokasi = Lokasi::findOrFail($id);
+        return response()->json($lokasi);
+    }
+    public function updateLokasi(Request $request, $id)
+    {
+        $request->validate([
+            'nama_lokasi' => 'required|string|max:255',
+            'kode_lokasi' => 'required|string|max:50',
+            'keterangan'  => 'nullable|string',
+        ]);
+
+        $lokasi = Lokasi::findOrFail($id);
+        $lokasi->update($request->all());
+
+        return response()->json(['success' => true, 'message' => 'Lokasi berhasil diupdate']);
+    }
+    public function deleteLokasi($id)
+    {
+        $lokasi = Lokasi::findOrFail($id);
+        $lokasi->delete();
+        return response()->json(['success' => true, 'message' => 'Lokasi berhasil dihapus']);
+    }
 }

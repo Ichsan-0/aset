@@ -41,13 +41,21 @@ Route::controller(DataMaster::class)->group(function () {
     Route::get('/kategori_barang/edit/{id}', 'editKategoriBarang')->name('kategori_barang.edit');
     Route::post('/kategori_barang/update/{id}', 'updateKategoriBarang')->name('kategori_barang.update');
     Route::delete('/kategori_barang/delete/{id}', 'deleteKategoriBarang')->name('kategori_barang.delete');
-    
+    // Lokasi
+    Route::get('/lokasi', 'lokasi')->name('lokasi.index');
+    Route::get('/lokasi/ajax', 'ajaxLokasi')->name('lokasi.ajax');
+    Route::post('/lokasi/store', 'storeLokasi')->name('lokasi.store');
+    Route::get('/lokasi/edit/{id}', 'editLokasi')->name('lokasi.edit');
+    Route::post('/lokasi/update/{id}', 'updateLokasi')->name('lokasi.update');
+    Route::delete('/lokasi/delete/{id}', 'deleteLokasi')->name('lokasi.delete');
+
+
     Route::get('/user', 'user')->name('user.index');
     Route::get('/pimpinan', 'pimpinan')->name('pimpinan.index');
     
     Route::get('/barang', 'barang')->name('barang.index');
     Route::get('/suplier', 'suplier')->name('suplier.index');
-    Route::get('/lokasi', 'lokasi')->name('lokasi.index');
+   
     Route::get('/penerimaan', 'penerimaan')->name('penerimaan.index');
     Route::get('/lainnya', 'lainnya')->name('lainnya.index');
 });
