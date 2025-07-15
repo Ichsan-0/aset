@@ -43,13 +43,19 @@
         </div>
         <div class="modal-body">
           <input type="hidden" name="id" id="kategori_barang_id">
-          <div class="mb-3">
-            <label class="form-label">Nama kategori barang</label>
-            <input type="text" class="form-control" name="nama_kategori" id="nama_kategori" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Kode Kategori Barang</label>
-            <input type="text" class="form-control" name="kode_kategori" id="kode_kategori" required>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Nama kategori barang</label>
+                <input type="text" class="form-control" name="nama_kategori" id="nama_kategori" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Kode Kategori Barang</label>
+                <input type="text" class="form-control" name="kode_kategori" id="kode_kategori" required>
+              </div>
+            </div>
           </div>
                
             <div class="mb-3">
@@ -113,16 +119,15 @@ $(function () {
                 data: 'tipe_barang', 
                 name: 'tipe_barang',
                 render: function(data, type, row) {
-                switch(data) {
-                  case '1': return 'Aset Tetap';
-                  case '2': return 'Persediaan / Habis Pakai';
-                  case '3': return 'Aset Tak Berwujud';
-                  case '4': return 'Barang Modal';
-                  case '5': return 'Barang Lainnya';
-                  default: return data;
+                  switch(data) {
+                    case '1': return 'Aset Tetap';
+                    case '2': return 'Persediaan / Habis Pakai';
+                    case '3': return 'Aset Tak Berwujud';
+                    case '4': return 'Barang Modal';
+                    case '5': return 'Barang Lainnya';
+                    default: return data;
+                  }
                 }
-                }
-              }
             },
             { data: 'status', name: 'status',
               render: function(data, type, row) {
@@ -137,7 +142,7 @@ $(function () {
     // show modal for add
     $('#addBtn').on('click', function () {
         $('#kategori_barangForm')[0].reset();
-        $('#id').val('');
+        $('#kategori_barang_id').val(''); // <-- pastikan ini juga
         $('.modal-title').text('Tambah kategori_barang');
         $('#kategori_barangModal').modal('show');
     });
@@ -146,11 +151,14 @@ $(function () {
     $(document).on('click', '.editBtn', function () {
         var id = $(this).data('id');
         $.get('/kategori_barang/edit/' + id, function (data) {
-            $('#kategori_barang_id').val(data.id);
-            $('#nama').val(data.nama);
-            $('#kode').val(data.kode);
+            $('#kategori_barang_id').val(data.id); // <-- ini yang benar
+            $('#nama_kategori').val(data.nama_kategori);
+            $('#kode_kategori').val(data.kode_kategori);
+            $('#tipe_barang').val(data.tipe_barang);
+            $('#status').val(data.status);
             $('#ket').val(data.ket);
-            $('.modal-title').text('Edit kategori_barang');
+            $('#urutan').val(data.urutan);
+            $('.modal-title').text('Edit kategori barang');
             $('#kategori_barangModal').modal('show');
         });
     });
