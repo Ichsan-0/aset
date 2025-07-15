@@ -48,13 +48,19 @@ Route::controller(DataMaster::class)->group(function () {
     Route::get('/lokasi/edit/{id}', 'editLokasi')->name('lokasi.edit');
     Route::post('/lokasi/update/{id}', 'updateLokasi')->name('lokasi.update');
     Route::delete('/lokasi/delete/{id}', 'deleteLokasi')->name('lokasi.delete');
-
+    // Supplier
+    Route::get('/supplier', 'supplier')->name('supplier.index');
+    Route::get('/supplier/ajax', 'ajaxSupplier')->name('supplier.ajax');
+    Route::post('/supplier/store', 'storeSupplier')->name('supplier.store');
+    Route::get('/supplier/edit/{id}', 'editSupplier')->name('supplier.edit');
+    Route::post('/supplier/update/{id}', 'updateSupplier')->name('supplier.update');
+    Route::delete('/supplier/delete/{id}', 'deleteSupplier')->name('supplier.delete');
 
     Route::get('/user', 'user')->name('user.index');
     Route::get('/pimpinan', 'pimpinan')->name('pimpinan.index');
     
     Route::get('/barang', 'barang')->name('barang.index');
-    Route::get('/suplier', 'suplier')->name('suplier.index');
+    
    
     Route::get('/penerimaan', 'penerimaan')->name('penerimaan.index');
     Route::get('/lainnya', 'lainnya')->name('lainnya.index');

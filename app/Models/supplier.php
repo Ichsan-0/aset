@@ -5,14 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Lokasi extends Model
+class supplier extends Model
 {
     use HasFactory;
-    protected $table = 'lokasis'; //
+    protected $table = 'suppliers'; // nama tabel
     protected $fillable = [
-        'nama_lokasi',
-        'gedung',
-        'lantai',
+        'nama_supplier',
+        'alamat',
+        'telepon',
+        'email',
+        'pic',
+        'kode_supplier',
         'keterangan',
         'status',
     ];

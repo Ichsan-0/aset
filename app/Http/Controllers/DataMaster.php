@@ -9,6 +9,8 @@ use App\Models\TahunAjaran;
 use App\Models\Fakultas;
 use App\Models\Kategori_barang;
 use App\Models\Lokasi;
+use App\Models\Supplier;
+use App\Models\Barang;
 
 class DataMaster extends Controller
 {
@@ -326,7 +328,9 @@ public function ajaxTahun(Request $request)
     {
         $request->validate([
             'nama_lokasi' => 'required|string|max:255',
-            'kode_lokasi' => 'required|string|max:50',
+            'gedung'     => 'required|string|max:50',
+            'lantai'     => 'required|integer',
+            'status'     => 'required|string|max:20',
             'keterangan'  => 'nullable|string',
         ]);
 
@@ -343,8 +347,10 @@ public function ajaxTahun(Request $request)
     public function updateLokasi(Request $request, $id)
     {
         $request->validate([
-            'nama_lokasi' => 'required|string|max:255',
-            'kode_lokasi' => 'required|string|max:50',
+             'nama_lokasi' => 'required|string|max:255',
+            'gedung'     => 'required|string|max:50',
+            'lantai'     => 'required|integer',
+            'status'     => 'required|string|max:20',
             'keterangan'  => 'nullable|string',
         ]);
 
@@ -358,5 +364,38 @@ public function ajaxTahun(Request $request)
         $lokasi = Lokasi::findOrFail($id);
         $lokasi->delete();
         return response()->json(['success' => true, 'message' => 'Lokasi berhasil dihapus']);
+    }
+
+    public function supplier()
+    {
+        return view('master.supplier');
+    }
+
+    public function ajaxSupplier(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Supplier::query();
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    return '
+                    <div class="dropdown">
+                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                            <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <button class="dropdown-item editBtn" data-id="'.$row->id.'">  
+                                <i class="bx bx-edit-alt me-1"></i> Edit
+                            </button>
+                            <button class="dropdown-item deleteBtn" data-id="'.$row->id.'">
+                                <i class="bx bx-trash me-1"></i> Delete
+                            </button>
+                        </div>
+                    </div>';
+                })
+            ->rawColumns(['action'])
+            ->toJson();
+        }
     }
 }

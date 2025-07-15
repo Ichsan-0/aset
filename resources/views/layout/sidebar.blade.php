@@ -80,7 +80,7 @@
             <!-- Layouts -->
            @php
             // semua route di bawah Data Master
-            $dataMasterRoutes = ['tahun', 'prodi', 'fakultas', 'kategori_barang','lokasi'];
+            $dataMasterRoutes = ['tahun', 'prodi', 'fakultas', 'kategori_barang','lokasi', 'barang', 'supplier','penerimaan'];
 
             // hanya untuk Master Akademik
             $masterAkademikRoutes = ['tahun', 'prodi', 'fakultas'];
@@ -136,9 +136,9 @@
                   <div data-i18n="Without menu">Barang</div>
                   </a>
                 </li>
-                <li class="menu-item {{ request()->is('suplier') ? 'active' : '' }}">
-                  <a href="{{ route('suplier.index') }}" class="menu-link">
-                  <div data-i18n="Without menu">Suplier</div>
+                <li class="menu-item {{ request()->is('supplier')? 'active' : '' }}">
+                  <a href="{{ route('supplier.index') }}" class="menu-link">
+                  <div data-i18n="Without menu">Supplier</div>
                   </a>
                 </li>
                 <li class="menu-item {{ request()->is('penerimaan') ? 'active' : '' }}">
